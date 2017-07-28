@@ -46,7 +46,7 @@ function CanvasRenderModule() {
         window.addEventListener('resize', function () {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize( window.innerWidth, window.innerHeight );
         }, false);
 
         animate();
@@ -62,18 +62,16 @@ function CanvasRenderModule() {
 
     this.addEventListener = function (event, object, callback) {
         document.addEventListener(event, function (e) {
-            mouse.x = (e.clientX / renderer.domElement.width) * 2 - 1;
+            mouse.x =  (e.clientX / renderer.domElement.width) * 2 - 1;
             mouse.y = -(e.clientY / renderer.domElement.height) * 2 + 1;
 
             raycaster.setFromCamera(mouse, camera);
 
             let intersects = raycaster.intersectObject(object, true);
 
-            callback(intersects.sort((a, b) = > {
-                    return a.distanceToRay - b.distanceToRay;
-        })
-            [0]
-            )
+            callback(intersects.sort((a, b)=> {
+                return a.distanceToRay - b.distanceToRay;
+            })[0])
         });
     };
 

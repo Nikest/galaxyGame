@@ -3,7 +3,7 @@ const router = express.Router();
 
 const galaxyGenerator = require('../gameSystem/gameModules/galaxyGenerator');
 
-router.get('/', function (req, res, next) {
+router.get('/', function(req, res, next) {
     const stars = galaxyGenerator().generateNewGalaxy();
     res.send(stars)
 });

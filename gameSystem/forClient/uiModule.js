@@ -4,8 +4,7 @@ function UImodule() {
 
     this.init = function (mBuilderApi) {
         gameModuleGetter = mBuilderApi;
-        window.UIclosePopup = function () {
-            console.log('rem');
+        window.UIclosePopup = function() { console.log('rem');
             document.body.removeChild(document.getElementById('popup'))
         };
 
@@ -23,7 +22,7 @@ function UImodule() {
             <aside class="popup text-to-center">
                 <header><h1>${props.title}</h1></header>
                 <main>
-                    ${props.masseges.map((elem) = > {return `<p>${elem}</p>`}).join('')}
+                    ${props.masseges.map((elem)=> {return `<p>${elem}</p>`}).join('')}
                 </main>
                 <footer>
                     <button onclick="window.UIclosePopup()">Close</button>

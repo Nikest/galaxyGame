@@ -13,11 +13,9 @@ function ModuleBuilderModule() {
         return this
     };
     this.initGameModules = function () {
-        Object.keys(gameModules).forEach((module) = > {
+        Object.keys(gameModules).forEach((module)=>{
             gameModules[module].init(this.api)
-        }
-        )
-        ;
+        });
 
         this.initGameModules = afterInit;
         return this
@@ -25,13 +23,12 @@ function ModuleBuilderModule() {
     this.gameStart = function () {
         gameModules.canvasRender.startRender();
 
-        gameModules.serverRequester.getGalaxy().then(responce = > {
+        gameModules.serverRequester.getGalaxy().then(responce=> {
             const galaxy = JSON.parse(responce);
-        window.starsField = galaxy.starsField;
+            window.starsField = galaxy.starsField;
 
-        gameModules.astroViewer.renderGalaxy(galaxy);
-    })
-        ;
+            gameModules.astroViewer.renderGalaxy(galaxy);
+        });
 
         this.gameStart = afterStart;
         return this
@@ -45,11 +42,9 @@ function ModuleBuilderModule() {
     function afterCreate() {
         console.error('Modules was created');
     }
-
     function afterInit() {
         console.error('Modules was initializes');
     }
-
     function afterStart() {
         console.error('Game was Started');
     }

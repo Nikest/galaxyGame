@@ -56,17 +56,14 @@ const starsGenerator = function () {
     };
 
     return {
-        generateStar: function (addons) {
+        generateStar: function(addons) {
             const fraction = Math.random(1, 10000000);
 
-            const starType = Object.keys(starsType).find(star = > {
-                    if(fraction >= starsType[star].fraction[0] && fraction <= starsType[star].fraction[1]
-            )
-            {
-                return star
-            }
-        })
-            ;
+            const starType = Object.keys(starsType).find(star=> {
+                if(fraction >=  starsType[star].fraction[0] && fraction <= starsType[star].fraction[1]) {
+                    return star
+                }
+            });
 
             const temperature = Math.random(starsType[starType].temperature[0], starsType[starType].temperature[1]);
 

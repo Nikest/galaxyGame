@@ -35,15 +35,15 @@ function ShadersMaterialModule() {
 
         return new THREE.ShaderMaterial({
             uniforms: {
-                amplitude: {type: "f", value: 1.0},
-                color: {type: "c", value: new THREE.Color(0xffffff)},
-                texture: {type: "t", value: new THREE.TextureLoader().load(imageData)}
+                amplitude: { type: "f", value: 1.0 },
+                color:     { type: "c", value: new THREE.Color(0xffffff) },
+                texture:   { type: "t", value: new THREE.TextureLoader().load(imageData)}
             },
-            vertexShader: vertexShader,
+            vertexShader:   vertexShader,
             fragmentShader: fragmentShader,
-            blending: THREE.AdditiveBlending,
-            depthTest: false,
-            transparent: true
+            blending:       THREE.AdditiveBlending,
+            depthTest:      false,
+            transparent:    true
         });
     };
 
@@ -77,7 +77,7 @@ function ShadersMaterialModule() {
             canvas.height = 64;
             let context = canvas.getContext('2d');
 
-            for (let i = 1; i < 33; i++) {
+            for(let i = 1; i < 33; i++) {
                 context.beginPath();
                 context.arc(64 / 2, 64 / 2, (64 / 4) + (i / 2), 0, 2 * Math.PI, false);
                 context.fillStyle = "rgba(255, 255, 255, " + (1 / i + 0.8) + ")";
@@ -90,11 +90,11 @@ function ShadersMaterialModule() {
         let circleTexture = new THREE.Texture(generateCircleTexture());
         circleTexture.needsUpdate = true;
 
-        return new THREE.ShaderMaterial({
+        return new THREE.ShaderMaterial( {
             uniforms: {
-                amplitude: {type: "f", value: 1.0},
-                color: {type: "c", value: new THREE.Color(0xffffff)},
-                texture: {type: "t", value: circleTexture}
+                amplitude: { type: "f", value: 1.0 },
+                color: { type: "c", value: new THREE.Color(0xffffff) },
+                texture: { type: "t", value: circleTexture }
             },
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,

@@ -10,14 +10,14 @@ const api = {
             if (err) throw err;
 
             files.forEach(function (file) {
-                if (file !== 'three.js' && file !== 'OrbitControls.js') {
+                if(file !== 'three.js' && file !== 'OrbitControls.js') {
                     filesPaths.push(dirPath + file)
                 }
             });
 
-            async.map(filesPaths, function (filePath, cb) {
+            async.map(filesPaths, function(filePath, cb){
                 fs.readFile(filePath, 'utf8', cb);
-            }, function (err, results) {
+            }, function(err, results) {
                 if (err) throw err;
 
                 fs.writeFile('./public/javascripts/main.js', results.join('\n'))
