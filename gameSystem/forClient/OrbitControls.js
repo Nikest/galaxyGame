@@ -13,7 +13,7 @@
 //    Zoom - middle mouse, or mousewheel / touch: two finger spread or squish
 //    Pan - right mouse, or arrow keys / touch: three finger swipe
 
-THREE.OrbitControls = function ( object, domElement ) {
+THREE.OrbitControls = function (object, domElement, speed, zoom) {
 
 	this.object = object;
 
@@ -50,7 +50,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 	// This option actually enables dollying in and out; left as "zoom" for backwards compatibility.
 	// Set to false to disable zooming
-	this.enableZoom = true;
+	this.enableZoom = zoom;
 	this.zoomSpeed = 1.0;
 
 	// Set to false to disable rotating
@@ -59,7 +59,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 	// Set to false to disable panning
 	this.enablePan = true;
-	this.keyPanSpeed = 7.0;	// pixels moved per arrow key push
+	this.keyPanSpeed = speed;	// pixels moved per arrow key push
 
 	// Set to true to automatically rotate around the target
 	// If auto-rotate is enabled, you must call controls.update() in your animation loop
@@ -70,7 +70,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 	this.enableKeys = true;
 
 	// The four arrow keys
-	this.keys = { LEFT: 37, UP: 38, RIGHT: 39, BOTTOM: 40 };
+	this.keys = { LEFT: 65, UP: 81, RIGHT: 68, BOTTOM: 90, FORWARD: 87, BACKWARD: 83 };
 
 	// Mouse buttons
 	this.mouseButtons = { ORBIT: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, PAN: THREE.MOUSE.RIGHT };
@@ -547,6 +547,15 @@ THREE.OrbitControls = function ( object, domElement ) {
 				scope.update();
 				break;
 
+            case scope.keys.FORWARD:
+            	object.position.add(object.getWorldDirection().multiplyScalar(scope.keyPanSpeed));
+                scope.update();
+                break;
+
+            case scope.keys.BACKWARD:
+                object.position.add(object.getWorldDirection().multiplyScalar(-scope.keyPanSpeed));
+                scope.update();
+                break;
 		}
 
 	}

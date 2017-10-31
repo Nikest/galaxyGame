@@ -1,9 +1,9 @@
 function UImodule() {
 
-    let gameModuleGetter;
+    let coreAPI;
 
-    this.init = function (mBuilderApi) {
-        gameModuleGetter = mBuilderApi;
+    this.init = function (getCoreAPI) {
+        coreAPI = getCoreAPI;
         window.UIclosePopup = function() { console.log('rem');
             document.body.removeChild(document.getElementById('popup'))
         };

@@ -1,9 +1,9 @@
 function ShadersMaterialModule() {
 
-    let gameModuleGetter;
+    let coreAPI;
 
-    this.init = function (mBuilderApi) {
-        gameModuleGetter = mBuilderApi;
+    this.init = function (getCoreAPI) {
+        coreAPI = getCoreAPI;
         this.init = afterInit;
     };
 

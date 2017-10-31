@@ -1,14 +1,17 @@
 function AstroViewerModule() {
 
-    let gameModuleGetter;
+    let coreAPI;
+    let galaxyDataLocal;
+    let galaxyGeometry;
 
-    this.init = function (mBuilderApi) {
-        gameModuleGetter = mBuilderApi;
+    this.init = function (getCoreAPI) {
+        coreAPI = getCoreAPI;
 
         this.init = afterInit;
     };
 
-    this.renderGalaxy = function (galaxyData) {
+    this.renderGalaxy = function (galaxyData, update) {
+        galaxyDataLocal = galaxyData;
 
         new Promise((res, rej)=> {
             const starsPositions = [];
@@ -24,7 +27,7 @@ function AstroViewerModule() {
                 starsColors.push(star.color[1] / 255);
                 starsColors.push(star.color[2] / 255);
 
-                starsSizes.push(star.radius / 2000000);
+                starsSizes.push(star.radius / 10000000);
             });
 
             res({
@@ -34,33 +37,47 @@ function AstroViewerModule() {
             });
 
         }).then(float32Arrays=> {
-            const galaxyGeometry = new THREE.BufferGeometry();
+            let starMaterial;
+
+            if(!update) {
+                galaxyGeometry = new THREE.BufferGeometry();
+                starMaterial = coreAPI.getGameModules().shadersMaterials.getStarsFieldMaterial();
+            }
+
+            galaxyGeometry = update? galaxyGeometry : new THREE.BufferGeometry();
 
             galaxyGeometry.addAttribute('position', new THREE.BufferAttribute(float32Arrays.positionsFloat32, 3));
             galaxyGeometry.addAttribute('customColor', new THREE.BufferAttribute(float32Arrays.colorsFloat32, 3));
             galaxyGeometry.addAttribute('size', new THREE.BufferAttribute(float32Arrays.sizesFloat32, 1));
 
-            const starMaterial = gameModuleGetter.getGameModules().shadersMaterials.getStarsFieldMaterial();
+            if(update) {
+                return false
+            }
 
             return {
                 galaxyGeometry: galaxyGeometry,
                 starMaterial: starMaterial
             }
         }).then(galaxyObject=> {
+
+            coreAPI.message('render');
+
+            if(!galaxyObject) {
+                return false
+            }
+
             const galaxySphere = new THREE.Points(galaxyObject.galaxyGeometry, galaxyObject.starMaterial);
+            galaxySphere.frustumCulled = false;
 
-            gameModuleGetter.getGameModules().canvasRender.addToScene(galaxySphere);
+            coreAPI.getGameModules().canvasRender.addToScene(galaxySphere);
 
-            gameModuleGetter.getGameModules().canvasRender.addEventListener('click', galaxySphere, function (star) { console.log(star);
+            coreAPI.getGameModules().canvasRender.addEventListener('click', galaxySphere, function (star) {
                 if(star) {
                     new Promise((res, rej)=> {
-
                         res(galaxyData.starsField[star.index]);
-
                     }).then((currentStar)=> {
-
-                        if(star.distanceToRay < 0.05) {
-                            gameModuleGetter.getGameModules().uiModule.generateInfoAlert({
+                        if(star.distanceToRay < 0.025) {
+                            coreAPI.getGameModules().uiModule.generateInfoAlert({
                                 title: currentStar.name,
                                 masseges: [
                                     'TYPE: ' + currentStar.type,
@@ -74,6 +91,11 @@ function AstroViewerModule() {
             });
         });
 
+    };
+
+    this.starFieldUpdate = function (stars) {
+        galaxyDataLocal.starsField = stars;
+        this.renderGalaxy(galaxyDataLocal, true);
     };
 
     function afterInit() {

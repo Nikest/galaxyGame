@@ -2,13 +2,16 @@ const Math = require('mathjs');
 const starsGenerator = require('./starsGenerator');
 const nameGenerator = require('./nameGenerator');
 
+const starsActuals = {};
+const quality = 10;
+
 function diffusion(orbit) {
     let dif = Math.random(0, 2 + orbit / 20);
     return (Math.random(0, 1) > 0.5)? dif : -(dif);
 }
 
-function diffusionOrbit(o) {
-    let difOrb = Math.random(0, 0.1);
+function diffusionOrbit() {
+    let difOrb = Math.random(0, 1);
     return (Math.random(0, 1) > 0.5)? difOrb : -(difOrb);
 }
 
@@ -81,8 +84,41 @@ const galaxyGenerator = function () {
         generateNewGalaxy: function () {
             return {
                 name: nameGenerator().getName(),
-                starsField: starsArray
+                starsField: [starsGenerator().generateStar({
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                    ID: nameGenerator().getTextID()
+                })]
             }
+        },
+        generatePart: function (x, y, z) {
+            const stars = [];
+
+            for(let ix = x - quality; ix < x + quality; ix++) {
+                for(let iy = y - quality; iy < y + quality; iy++) {
+                    for(let iz = z - quality; iz < z + quality; iz++) {
+                        let coord = ix + ':' + iy + ':' + iz;
+
+                        if(starsActuals[coord]) {
+                            stars.push(starsActuals[coord]);
+                        } else {
+                            let star = starsGenerator().generateStar({
+                                x: ix + diffusionOrbit(),
+                                y: iy + diffusionOrbit(),
+                                z: iz + diffusionOrbit(),
+                                ID: nameGenerator().getTextID()
+                            });
+
+                            stars.push(star);
+
+                            starsActuals[coord] = star;
+                        }
+                    }
+                }
+            }
+
+            return stars;
         }
     }
 

@@ -8,4 +8,9 @@ router.get('/', function(req, res, next) {
     res.send(stars)
 });
 
+router.post('/coords', function(req, res, next) {
+    let star = galaxyGenerator().generatePart(req.body.x, req.body.y, req.body.z);
+    res.send(star)
+});
+
 module.exports = router;

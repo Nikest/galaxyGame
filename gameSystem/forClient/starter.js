@@ -1,6 +1,6 @@
 window.addEventListener('load', function () {
-    const mBuilder = new ModuleBuilderModule();
-    mBuilder.createGameModules();
-    mBuilder.initGameModules();
-    mBuilder.gameStart();
+    const core = new CoreModule();
+    core.createGameModules();
+    core.initGameModules();
+    core.gameStart();
 });
