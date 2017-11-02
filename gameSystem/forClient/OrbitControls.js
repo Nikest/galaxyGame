@@ -548,12 +548,12 @@ THREE.OrbitControls = function (object, domElement, speed, zoom) {
 				break;
 
             case scope.keys.FORWARD:
-            	object.position.add(object.getWorldDirection().multiplyScalar(scope.keyPanSpeed));
+            	//object.position.add(object.getWorldDirection().multiplyScalar(scope.keyPanSpeed));
                 scope.update();
                 break;
 
             case scope.keys.BACKWARD:
-                object.position.add(object.getWorldDirection().multiplyScalar(-scope.keyPanSpeed));
+                //object.position.add(object.getWorldDirection().multiplyScalar(-scope.keyPanSpeed));
                 scope.update();
                 break;
 		}

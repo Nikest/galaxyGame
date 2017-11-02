@@ -14,7 +14,7 @@ function CanvasRenderModule() {
 
         let cameraPos = cameraPositionChecking();
         if(cameraPos) {
-            coreAPI.message('cameraPosition', cameraPos)
+            coreAPI.message('cameraPosition', cameraPos);
         }
 
         render();
@@ -98,6 +98,8 @@ function CanvasRenderModule() {
             camera.updateProjectionMatrix();
             renderer.setSize( window.innerWidth, window.innerHeight );
         }, false);
+
+        coreAPI.message('cameraPosition', cameraPrevPosition);
 
         animate();
     };

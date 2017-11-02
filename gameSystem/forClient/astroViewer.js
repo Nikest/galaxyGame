@@ -6,7 +6,6 @@ function AstroViewerModule() {
 
     this.init = function (getCoreAPI) {
         coreAPI = getCoreAPI;
-
         this.init = afterInit;
     };
 
@@ -89,6 +88,8 @@ function AstroViewerModule() {
                     });
                 }
             });
+
+            coreAPI.getGameModules().serverRequester.getGalaxyPart({x: 0, y: 0, z: 0})
         });
 
     };

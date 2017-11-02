@@ -11,7 +11,7 @@ function ServerRequesterModule() {
         });
     };
 
-    this.getGalaxyPart = function (coords) {
+    this.getGalaxyPart = function (coords) {  console.log('getGalaxyPart', coords);
         unsbscr();
         const xmlhttp = new XMLHttpRequest();
         return new Promise(function (res, rej) {
